@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>NYC 2026 | Pylants + Reamers</title>
+<style>
+:root{
+  --bg:#f5f1eb;--card:#ffffff;--text:#171717;--muted:#6f6a64;--line:#e6ded5;
+  --thu:#2f7d4a;--fri:#7e3f98;--sat:#d17a22;--sun:#c85a8e;--red:#dc3545;
+  --gold:#c9a227;--soft:#f0ece7;--shadow:0 8px 24px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{color:inherit}
+.shell{max-width:900px;margin:0 auto;padding:0 14px 92px}
+.hero{padding:22px 2px 12px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800}
+h1{font-size:34px;line-height:1.05;margin:6px 0 6px}
+.sub{color:var(--muted);font-size:15px}
+.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.button{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:14px;padding:13px 14px;font-weight:800;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+.button.primary{background:#171717;color:#fff;border-color:#171717}
+.glance{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 18px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;text-align:center}
+.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
+.notice{background:#fff7e7;border:1px solid #eed7a0;border-radius:14px;padding:12px 14px;font-size:13px;margin:10px 0 16px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none;position:sticky;top:0;background:linear-gradient(var(--bg) 72%,rgba(245,241,235,0));z-index:10}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:none;background:#fff;border:1px solid var(--line);padding:10px 13px;border-radius:999px;font-weight:800;white-space:nowrap;color:var(--text)}
+.tab.active{background:#171717;color:#fff;border-color:#171717}
+.panel{display:none}.panel.active{display:block}
+.day-head{border-radius:18px;padding:16px;color:#fff;margin:4px 0 12px;box-shadow:var(--shadow)}
+.day-head h2{margin:0 0 4px;font-size:22px}.day-head p{margin:0;font-size:13px;opacity:.92}
+.thu{background:var(--thu)}.fri{background:var(--fri)}.sat{background:var(--sat)}.sun{background:var(--sun)}
+.timeline{display:flex;flex-direction:column;gap:10px}
+.item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 14px;box-shadow:var(--shadow)}
+.item-top{display:flex;gap:10px;align-items:flex-start}
+.time{font-size:12px;color:var(--muted);min-width:64px;padding-top:3px;font-weight:700}
+.title{font-weight:850;font-size:16px;flex:1}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:900;letter-spacing:.02em;white-space:nowrap}
+.confirmed{background:#fde7ea;color:#a51d2c}.planned{background:#eaf1ff;color:#315b88}.optional{background:#f1f1f1;color:#666}.must{background:#fff3cb;color:#8a6a00}
+.desc{font-size:13px;color:#4f4a45;margin:8px 0 0 74px}
+.item-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0 74px}
+.mini{font-size:12px;text-decoration:none;border:1px solid var(--line);padding:7px 9px;border-radius:10px;background:#fff;font-weight:750}
+details.more{margin:8px 0 0 74px;border-top:1px dashed var(--line);padding-top:8px}
+details.more summary{cursor:pointer;font-size:12px;color:var(--muted);font-weight:800}
+details.more p{font-size:13px;margin:7px 0 0;color:#4f4a45}
+.section-title{font-size:19px;margin:24px 0 10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);margin-bottom:10px}
+.card h3{margin:0 0 8px;font-size:16px}
+.list{display:grid;gap:8px}
+.row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:none;padding-top:0}
+.row .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);margin-top:6px;flex:none}
+.row b{display:block}.row small{color:var(--muted)}
+.searchbox{display:flex;gap:8px;margin-bottom:10px}
+.searchbox input{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:#fff}
+.filter{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;scrollbar-width:none}
+.filter::-webkit-scrollbar{display:none}
+.filter button{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:999px;font-size:12px;font-weight:750;white-space:nowrap}
+.filter button.on{background:#171717;color:#fff}
+.extra{display:block}
+.extra.hidden{display:none}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:26px}
+.bottomnav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 24px);max-width:880px;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:18px;display:grid;grid-template-columns:repeat(4,1fr);padding:7px;box-shadow:0 12px 40px rgba(0,0,0,.14);z-index:50}
+.bottomnav button,.bottomnav a{border:none;background:transparent;text-decoration:none;text-align:center;padding:8px 4px;border-radius:12px;font-size:11px;font-weight:800;color:var(--muted)}
+.bottomnav button.active{background:#171717;color:#fff}
+@media(min-width:700px){
+  .hero-actions{grid-template-columns:repeat(4,1fr)}
+  .glance{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero">
+  <div class="eyebrow">Pylants + Reamers</div>
+  <h1>🗽 NYC 2026</h1>
+  <div class="sub">Oct 1–4, 2026 • Renaissance New York Times Square</div>
+
+  <div class="hero-actions">
+    <a class="button primary" target="_blank" href="https://www.google.com/maps/d/u/1/edit?mid=1YyeUjd-OAk6OmQMZuuPP9Nt4BySRmOI&usp=sharing">🗺️ Open Map</a>
+    <button class="button" type="button" onclick="showPanel('reservations')">🔒 Reservations</button>
+    <button class="button" type="button" onclick="showPanel('extras')">🍸 Cool Extras</button>
+    <button class="button" type="button" onclick="showPanel(todayPanel())">📍 Today</button>
+  </div>
+
+  <div class="glance">
+    <div class="stat"><b>4</b><span>days</span></div>
+    <div class="stat"><b>3</b><span>booked dinners</span></div>
+    <div class="stat"><b>1</b><span>Broadway show</span></div>
+    <div class="stat"><b>∞</b><span>cocktail potential</span></div>
+  </div>
+
+  <div class="notice">The route is the guide, not a hostage negotiation. If we love somewhere, stay. If we’re tired, cut something.</div>
+</header>
+
+<nav class="tabs" aria-label="Trip days">
+  <button class="tab active" data-panel="thu">Thu 10/1</button>
+  <button class="tab" data-panel="fri">Fri 10/2</button>
+  <button class="tab" data-panel="sat">Sat 10/3</button>
+  <button class="tab" data-panel="sun">Sun 10/4</button>
+  <button class="tab" data-panel="reservations">Reservations</button>
+  <button class="tab" data-panel="extras">Extras</button>
+</nav>
+
+<section class="panel active" id="thu">
+  <div class="day-head thu"><h2>Thursday • Arrival + Central Park + Speakeasy</h2><p>Easy first-day sightseeing, then split evening plans.</p></div>
+  <div class="timeline">
+    <article class="item"><div class="item-top"><div class="time">10:25</div><div class="title">✈️ Arrive EWR</div></div><div class="desc">Stefani + Kyle land at 10:25. Mel lands at 10:30. Meet at Newark and ride together to the hotel.</div></article>
+    <article class="item"><div class="item-top"><div class="time">12:45</div><div class="title">🥙 Amali</div><span class="badge confirmed">CONFIRMED</span></div><div class="desc">Mediterranean lunch for 3. Quick, polished first meal. Mel’s vegan note is on the reservation.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.amalinyc.com/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">~2:00</div><div class="title">🚲 Central Park Pedicab</div><span class="badge planned">TO BOOK</span></div><div class="desc">About one hour. The Mall, Bethesda Terrace, Bow Bridge and Strawberry Fields if timing works.</div><details class="more"><summary>Why this instead of walking?</summary><p>It saves your legs on arrival day and lets you see more of the iconic park without turning the afternoon into a hike.</p></details></article>
+    <article class="item"><div class="item-top"><div class="time">~3:15</div><div class="title">📸 Stoop &amp; the City</div></div><div class="desc">Quick photo stop at 241 E 78th. Seasonal decor is part of the fun.</div></article>
+    <article class="item"><div class="item-top"><div class="time">6–9</div><div class="title">💼 Stefani Work Event</div></div><div class="desc">Kyle + Mel get their own Midtown mini-night while Stefani works.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~6:00</div><div class="title">🚉 Kyle + Mel: Grand Central → Bryant Park</div></div><div class="desc">Main concourse, Bryant Park and the NYPL exterior. Easy wandering, no timed attraction.</div></article>
+    <article class="item"><div class="item-top"><div class="time">7:30</div><div class="title">🥟 Calle Dao</div><span class="badge confirmed">CONFIRMED</span></div><div class="desc">Kyle + Mel dinner. Cuban-Chinese fusion, which earns serious “that’s NYC” points.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.calledao.com/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">~9:15</div><div class="title">🍸 Raines Law Room at The William</div><span class="badge planned">TO BOOK</span></div><div class="desc">Stefani rejoins Kyle + Mel for a candlelit, seated speakeasy nightcap.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.raineslawroom.com/">🌐 Website</a></div></article>
+  </div>
+</section>
+
+<section class="panel" id="fri">
+  <div class="day-head fri"><h2>Friday • Downtown + Broadway + Hidden Bars</h2><p>Kyle + Mel explore. Mike arrives. Then everyone goes full NYC.</p></div>
+  <div class="timeline">
+    <article class="item"><div class="item-top"><div class="time">~8:05</div><div class="title">☕ Breakfast to-go</div></div><div class="desc">Keep it fast. Sleep wins.</div></article>
+    <article class="item"><div class="item-top"><div class="time">9:00</div><div class="title">🏛️ 9/11 Memorial &amp; Museum</div><span class="badge planned">TO BOOK</span></div><div class="desc">Kyle + Mel. Then Memorial Pools, Oculus and flexible FiDi wandering.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.911memorial.org/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">Afternoon</div><div class="title">🛍️ Choose Your Own Adventure</div><span class="badge optional">OPTIONAL</span></div><div class="desc">Empire State, Macy’s exterior, Tiffany, Bergdorf, Saks, Rockefeller Center, St. Patrick’s. Or skip it and relax.</div></article>
+    <article class="item"><div class="item-top"><div class="time">4:40</div><div class="title">✈️ Mike lands</div></div><div class="desc">Hotel → change → meet everyone at The Terrace.</div></article>
+    <article class="item"><div class="item-top"><div class="time">6:00</div><div class="title">🌿 The Terrace</div><span class="badge confirmed">CONFIRMED</span></div><div class="desc">Actual dinner + cocktails before Broadway. Tell the server about the 8 PM curtain.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.terraceatedition.com/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">8:00</div><div class="title">🎭 &amp; Juliet</div><span class="badge confirmed">CONFIRMED</span></div><div class="desc">Center Mezzanine, Row CC. Expect to spill back into Times Square around 10:30–10:40.</div><div class="item-actions"><a class="mini" target="_blank" href="https://andjulietbroadway.com/">🌐 Show Site</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">~10:50</div><div class="title">🍸 Try The Woo Woo</div><span class="badge optional">FIRST CHOICE</span></div><div class="desc">Hidden 1980s Times Square bar with a doorbell, password and secret VCR-bookcase entrance. If the line is dumb, bail.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.thewoowoonyc.com/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">~11:15</div><div class="title">🕳️ Nothing Really Matters</div><span class="badge confirmed">RESERVED</span></div><div class="desc">Guaranteed landing spot. Dark neon cocktail bar hidden inside a Midtown subway station.</div><div class="item-actions"><a class="mini" target="_blank" href="https://nothingreallymatters.party/">🌐 Website</a></div></article>
+  </div>
+</section>
+
+<section class="panel" id="sat">
+  <div class="day-head sat"><h2>Saturday • Village → Chinatown → Brooklyn → EMP</h2><p>The route is locked. The stopwatch is not.</p></div>
+  <div class="timeline">
+    <article class="item"><div class="item-top"><div class="time">~8:30</div><div class="title">🥯 Bagels on the Square</div></div><div class="desc">Proper NYC bagel breakfast.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~9:00</div><div class="title">🌳 Greenwich / West Village</div></div><div class="desc">Washington Square Park and neighborhood wandering.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~10:00</div><div class="title">📸 Friends Apartment</div><span class="badge must">MUST</span></div><div class="desc">90 Bedford St. Quick photo stop for Stefani + Mel.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~10:15</div><div class="title">🍸 Bar Pisellino</div></div><div class="desc">Morning aperitivo/espresso. Vacation rules apply.</div><div class="item-actions"><a class="mini" target="_blank" href="https://barpisellino.com/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">~11:00</div><div class="title">🛍️ SoHo Wander</div></div><div class="desc">Architecture + shopping. Mother’s Ruin is optional if the mood strikes.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~12:15</div><div class="title">🇮🇹 Little Italy</div></div><div class="desc">Short stroll + tiny treat. No full sit-down lunch.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~12:40</div><div class="title">🥟 Buddha Bodai</div></div><div class="desc">Vegan Chinese grazing stop for dumplings, bao, noodles or soup dumplings.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~1:00</div><div class="title">🏮 Chinatown + Doyers</div></div><div class="desc">Mott, Pell and Doyers before the bridge.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~1:30</div><div class="title">🌉 Walk Brooklyn Bridge</div><span class="badge must">MUST</span></div><div class="desc">Manhattan → Brooklyn. One of Stefani’s must-dos.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~2:20</div><div class="title">📸 DUMBO + Brooklyn Bridge Park</div></div><div class="desc">Washington Street photo + waterfront skyline time.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~2:50</div><div class="title">🍸 Harriet’s Rooftop</div></div><div class="desc">One daytime skyline cocktail.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~3:25</div><div class="title">🚕 Leave Brooklyn</div></div><div class="desc">Uber/cab back to the Renaissance. Protect the hotel reset.</div></article>
+    <article class="item"><div class="item-top"><div class="time">7:15</div><div class="title">✨ Eleven Madison Park</div><span class="badge confirmed">CONFIRMED + PAID</span></div><div class="desc">The big dinner. Nothing booked afterward.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.elevenmadisonpark.com/">🌐 Website</a></div></article>
+  </div>
+</section>
+
+<section class="panel" id="sun">
+  <div class="day-head sun"><h2>Sunday • Brunch + Airport</h2><p>Deliberately civilized.</p></div>
+  <div class="timeline">
+    <article class="item"><div class="item-top"><div class="time">Morning</div><div class="title">😴 Sleep, pack, check out</div></div><div class="desc">Leave bags with the Renaissance.</div></article>
+    <article class="item"><div class="item-top"><div class="time">~9:30</div><div class="title">🥂 UT47 Brunch</div><span class="badge planned">TO CONTACT</span></div><div class="desc">Farewell brunch with omnivore + dedicated vegan options and cocktails.</div><div class="item-actions"><a class="mini" target="_blank" href="https://www.ut47kitchen.com/">🌐 Website</a></div></article>
+    <article class="item"><div class="item-top"><div class="time">~10:45</div><div class="title">🧳 Grab bags → airport</div></div><div class="desc">No last-minute sightseeing gauntlet.</div></article>
+  </div>
+</section>
+
+<section class="panel" id="reservations">
+  <h2 class="section-title">🔒 Reservation Status</h2>
+  <div class="card">
+    <h3>Confirmed</h3>
+    <div class="list">
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>Renaissance Times Square</b><small>Hotel</small></div></div>
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>Amali</b><small>Thu 12:45 PM • party of 3</small></div></div>
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>Calle Dao</b><small>Thu 7:30 PM • Kyle + Mel</small></div></div>
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>The Terrace</b><small>Fri 6:00 PM • party of 4</small></div></div>
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>&amp; Juliet</b><small>Fri 8:00 PM • Center Mezzanine Row CC</small></div></div>
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>Nothing Really Matters</b><small>Fri ~11:15 PM • party of 4</small></div></div>
+      <div class="row"><div class="dot" style="background:var(--red)"></div><div><b>Eleven Madison Park</b><small>Sat 7:15 PM • paid/non-refundable</small></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Still to handle</h3>
+    <div class="list">
+      <div class="row"><div class="dot"></div><div><b>Central Park pedicab</b><small>Thu ~2 PM</small></div></div>
+      <div class="row"><div class="dot"></div><div><b>Raines Law Room</b><small>Thu ~9:15 PM</small></div></div>
+      <div class="row"><div class="dot"></div><div><b>9/11 Museum</b><small>Fri 9:00 AM • Kyle + Mel</small></div></div>
+      <div class="row"><div class="dot"></div><div><b>UT47</b><small>Sun ~9:30 AM • contact directly</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="extras">
+  <h2 class="section-title">🍸 Optional Cool Stuff</h2>
+  <div class="searchbox"><input id="search" type="search" placeholder="Search bars, food, neighborhoods…"></div>
+  <div class="filter">
+    <button class="on" data-filter="all">All</button>
+    <button data-filter="priority">⭐ Worth changing plans</button>
+    <button data-filter="nearby">💛 If nearby</button>
+    <button data-filter="food">🍝 Food experiences</button>
+  </div>
+
+  <div class="card extra" data-tags="priority bar speakeasy les cocktails attaboy">
+    <h3>⭐ Attaboy</h3><div class="sub">Lower East Side • no-menu cocktail bar</div>
+    <p>Tiny, candlelit bar with no printed menu. Tell the bartender what you like and they build the drink around you.</p>
+    <a class="mini" target="_blank" href="https://attaboy.us/">🌐 Website</a>
+    <a class="mini" target="_blank" href="https://www.instagram.com/attaboy134/">📸 Instagram</a>
+  </div>
+  <div class="card extra" data-tags="priority bar speakeasy pdt east village phone booth">
+    <h3>⭐ Please Don’t Tell (PDT)</h3><div class="sub">East Village • secret phone booth entrance</div>
+    <p>Enter through a vintage phone booth inside Crif Dogs. Peak hidden-bar theater.</p>
+  </div>
+  <div class="card extra" data-tags="priority bar speakeasy sip guzzle west village japanese">
+    <h3>⭐ Sip &amp; Guzzle</h3><div class="sub">West Village • two concepts in one</div>
+    <p>Guzzle upstairs, Japanese-inspired speakeasy Sip downstairs. Feels like two nights out stacked vertically.</p>
+  </div>
+  <div class="card extra" data-tags="priority bar speakeasy back room les prohibition">
+    <h3>⭐ The Back Room</h3><div class="sub">Lower East Side • Prohibition history</div>
+    <p>Actual Prohibition-era lineage. Cocktails in teacups, beer in paper bags.</p>
+  </div>
+  <div class="card extra" data-tags="priority bar speakeasy angels share west village japanese">
+    <h3>⭐ Angel’s Share</h3><div class="sub">West Village • intimate Japanese-style cocktails</div>
+    <p>Small, seated, serious cocktails. Strong fit for our group if we’re nearby after 5.</p>
+  </div>
+
+  <div class="card extra" data-tags="nearby bar speakeasy apotheke chinatown">
+    <h3>💛 Apotheke Chinatown</h3><p>Apothecary-themed cocktail bar on Doyers Street. Opens too late for our Saturday daytime route, but excellent map ammo.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar speakeasy little branch west village">
+    <h3>💛 Little Branch</h3><p>Underground West Village cocktail bar with a discreet entrance and classic speakeasy mood.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar speakeasy do not disturb west village">
+    <h3>💛 Do Not Disturb</h3><p>Dark West Village speakeasy. Good “we’re nearby and want one more” option.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar theme zodiac zoo sindang midtown">
+    <h3>💛 Zoo Sindang</h3><p>Hidden Midtown bar with lush decor and zodiac-themed cocktails.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar tribeca titsou">
+    <h3>💛 Titsou Bar</h3><p>Polished hidden Tribeca bar with vintage Parisian energy.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar les tigre martini">
+    <h3>💛 Tigre</h3><p>Plush LES cocktail lounge with a martini-forward program.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar grand central campbell historic">
+    <h3>💛 The Campbell</h3><p>Historic cocktail room hidden inside Grand Central. Gorgeous setting, especially if Kyle + Mel are already there.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar theme champagne problems bowery">
+    <h3>💛 Champagne Problems</h3><p>Maximalist Bowery cocktail experience. Only if it isn’t packed and the mood is right.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar madame george midtown jazz">
+    <h3>💛 Madame George</h3><p>Subterranean Midtown lounge with grown-up atmosphere and live-music energy.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar flatiron room murray hill whiskey jazz">
+    <h3>💛 The Flatiron Room</h3><p>Whiskey, cocktails and live music. Strong grown-up fallback.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar gair dumbo">
+    <h3>💛 gair</h3><p>DUMBO cocktail stop right on our Saturday orbit.</p>
+  </div>
+  <div class="card extra" data-tags="nearby bar nobody told me dumbo">
+    <h3>💛 Nobody Told Me</h3><p>Casual cocktail option in DUMBO if we want something easy and nearby.</p>
+  </div>
+
+  <div class="card extra" data-tags="food italian pasta nonna doras">
+    <h3>🍝 Nonna Dora’s</h3><div class="sub">Unique NYC food experience</div>
+    <p>Handmade pasta from the legendary Nonna Dora. Check vegan accommodations before turning it into a group meal.</p>
+    <a class="mini" target="_blank" href="https://nonnadoras.com/">🌐 Website</a>
+    <a class="mini" target="_blank" href="https://www.instagram.com/nonnadorasnyc/">📸 Instagram</a>
+  </div>
+</section>
+
+<footer>Tap 🌐 Website or 📸 Instagram on a place card when available. Use the Master Map for live location context. Recheck hours, menus and reservation policies shortly before travel.</footer>
+</div>
+
+<nav class="bottomnav">
+  <button class="active" data-panel="thu">Thu</button>
+  <button data-panel="fri">Fri</button>
+  <button data-panel="sat">Sat</button>
+  <button data-panel="sun">Sun</button>
+</nav>
+
+<script>
+const panels=[...document.querySelectorAll('.panel')];
+const topTabs=[...document.querySelectorAll('.tab')];
+const bottomBtns=[...document.querySelectorAll('.bottomnav button')];
+
+function showPanel(id){
+  panels.forEach(p=>p.classList.toggle('active',p.id===id));
+  topTabs.forEach(b=>b.classList.toggle('active',b.dataset.panel===id));
+  bottomBtns.forEach(b=>b.classList.toggle('active',b.dataset.panel===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+topTabs.forEach(b=>b.addEventListener('click',()=>showPanel(b.dataset.panel)));
+bottomBtns.forEach(b=>b.addEventListener('click',()=>showPanel(b.dataset.panel)));
+
+function todayPanel(){
+  const d=new Date();
+  const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return {'2026-10-01':'thu','2026-10-02':'fri','2026-10-03':'sat','2026-10-04':'sun'}[key]||'thu';
+}
+const activeToday=todayPanel();
+if(['2026-10-01','2026-10-02','2026-10-03','2026-10-04'].includes(
+  `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}-${String(new Date().getDate()).padStart(2,'0')}`
+)){ showPanel(activeToday); }
+
+const search=document.getElementById('search');
+const filterBtns=[...document.querySelectorAll('.filter button')];
+let filter='all';
+function runFilter(){
+  const q=(search.value||'').toLowerCase().trim();
+  document.querySelectorAll('.extra').forEach(el=>{
+    const hay=(el.textContent+' '+(el.dataset.tags||'')).toLowerCase();
+    const f=filter==='all'||(el.dataset.tags||'').includes(filter);
+    el.classList.toggle('hidden',!(hay.includes(q)&&f));
+  });
+}
+search.addEventListener('input',runFilter);
+filterBtns.forEach(btn=>btn.addEventListener('click',()=>{
+  filter=btn.dataset.filter;
+  filterBtns.forEach(b=>b.classList.toggle('on',b===btn));
+  runFilter();
+}));
+</script>
+</body>
+</html>
